@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import User
+from .models import EXBOUser
 
 
-@admin.register(User)
+@admin.register(EXBOUser)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ["exbo_user_id", "exbo_username"]
+    list_display = ["user_id", "access_token", "token_expires_in"]

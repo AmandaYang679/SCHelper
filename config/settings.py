@@ -80,13 +80,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Конфигурация БД
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config_env('POSTGRES_DB', default='modelhub'),
-        'USER': config_env('POSTGRES_USER', default='postgres'),
-        'PASSWORD': config_env('POSTGRES_PASSWORD', default='password'),
-        'HOST': config_env('POSTGRES_HOST', default='localhost'),
-        'PORT': config_env('POSTGRES_PORT', default='5432'),
-        'ATOMIC_REQUESTS': True,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -121,14 +116,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles' # Путь для собранных фа
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Custom User Model
-AUTH_USER_MODEL = 'accounts.User'
 
 # Настройки Django REST Framework
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',  # Разрешить доступ всем
     ],
@@ -147,29 +137,29 @@ REST_FRAMEWORK = {
 }
 
 
-# JWT настройки для SimpleJWT
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),  # время жизни access-токена
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),     # время жизни refresh-токена
-    "ROTATE_REFRESH_TOKENS": True,                   # при обновлении refresh генерируется новый
-    "BLACKLIST_AFTER_ROTATION": True,                # старый refresh становится недействительным
+# # JWT настройки для SimpleJWT
+# SIMPLE_JWT = {
+#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),  # время жизни access-токена
+#     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),     # время жизни refresh-токена
+#     "ROTATE_REFRESH_TOKENS": True,                   # при обновлении refresh генерируется новый
+#     "BLACKLIST_AFTER_ROTATION": True,                # старый refresh становится недействительным
 
-    "ALGORITHM": "HS256",
-    "SIGNING_KEY": config_env('SECRET_KEY'),
-    "VERIFYING_KEY": None,
+#     "ALGORITHM": "HS256",
+#     "SIGNING_KEY": config_env('SECRET_KEY'),
+#     "VERIFYING_KEY": None,
 
-    "AUTH_HEADER_TYPES": ("Bearer",),                # формат заголовка Authorization
-    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-    "USER_ID_FIELD": "id",
-    "USER_ID_CLAIM": "user_id",
+#     "AUTH_HEADER_TYPES": ("Bearer",),                # формат заголовка Authorization
+#     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+#     "USER_ID_FIELD": "id",
+#     "USER_ID_CLAIM": "user_id",
 
-    "TOKEN_TYPE_CLAIM": "token_type",
-    "JTI_CLAIM": "jti",
+#     "TOKEN_TYPE_CLAIM": "token_type",
+#     "JTI_CLAIM": "jti",
 
-    # Дополнительно можно включить сжатие payload
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=30),
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=7),
-}
+#     # Дополнительно можно включить сжатие payload
+#     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=30),
+#     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=7),
+# }
 
 
 # Настройка CORS для разработки и продакшена
