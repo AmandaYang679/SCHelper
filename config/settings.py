@@ -30,13 +30,14 @@ DJANGO_APPS = [
 # Список сторонних приложений
 THIRD_PARTY_APPS = [
     'rest_framework',
-    'corsheaders',
+    # 'corsheaders',
     'rest_framework_simplejwt',
 ]
 
 # Список локальных приложений
 LOCAL_APPS = [
     'apps.accounts',
+    'apps.tierlist',
 ]
 
 # Общий список приложений
@@ -80,8 +81,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Конфигурация БД
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config_env('POSTGRES_DB', default='modelhub'),
+        'USER': config_env('POSTGRES_USER', default='postgres'),
+        'PASSWORD': config_env('POSTGRES_PASSWORD', default='password'),
+        'HOST': config_env('POSTGRES_HOST', default='localhost'),
+        'PORT': config_env('POSTGRES_PORT', default='5432'),
+        'ATOMIC_REQUESTS': True,
     }
 }
 

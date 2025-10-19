@@ -10,7 +10,6 @@ class EXBOUser(models.Model):
     refresh_token = models.TextField(blank=False, null=True)
     token_expires_in = models.IntegerField(blank=False, null=True)
     
-    # objects = CustomUserManager()
-    def __str__(self): # Эта функция влияет на то, по какому параметру будут сортироваться users в админке
-        return self.user_id
-
+    class Meta:
+        db_table = 'users'
+        ordering = ('user_id',)
