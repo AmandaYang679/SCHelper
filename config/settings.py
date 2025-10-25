@@ -10,34 +10,34 @@ from decouple import config as config_env
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Секретный ключ для безопасности
-SECRET_KEY = config_env('SECRET_KEY')
+SECRET_KEY = config_env("SECRET_KEY")
 
 # Режим отладки
-DEBUG = config_env('DEBUG', default=False, cast=bool)
+DEBUG = config_env("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = config_env('ALLOWED_HOSTS', default='').split(',')
+ALLOWED_HOSTS = config_env("ALLOWED_HOSTS", default="").split(",")
 
 # Список встроенных Django приложений
 DJANGO_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 ]
 
 # Список сторонних приложений
 THIRD_PARTY_APPS = [
-    'rest_framework',
+    "rest_framework",
     # 'corsheaders',
-    'rest_framework_simplejwt',
+    "rest_framework_simplejwt",
 ]
 
 # Список локальных приложений
 LOCAL_APPS = [
-    'apps.accounts',
-    'apps.tierlist',
+    "apps.accounts",
+    "apps.tierlist",
 ]
 
 # Общий список приложений
@@ -46,48 +46,48 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # Список middleware для обработки запросов
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 # Главный URL файл проекта
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = "config.urls"
 
 # Конфигурация шаблонов Django
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Конфигурация БД
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config_env('POSTGRES_DB', default='modelhub'),
-        'USER': config_env('POSTGRES_USER', default='postgres'),
-        'PASSWORD': config_env('POSTGRES_PASSWORD', default='password'),
-        'HOST': config_env('POSTGRES_HOST', default='localhost'),
-        'PORT': config_env('POSTGRES_PORT', default='5432'),
-        'ATOMIC_REQUESTS': True,
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": config_env("POSTGRES_DB", default="modelhub"),
+        "USER": config_env("POSTGRES_USER", default="postgres"),
+        "PASSWORD": config_env("POSTGRES_PASSWORD", default="password"),
+        "HOST": config_env("POSTGRES_HOST", default="localhost"),
+        "PORT": config_env("POSTGRES_PORT", default="5432"),
+        "ATOMIC_REQUESTS": True,
     }
 }
 
@@ -95,50 +95,54 @@ DATABASES = {
 # Валидаторы паролей
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
 
 # Настройка интернациональности
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Europe/Moscow'
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "Europe/Moscow"
 USE_I18N = True
 USE_TZ = True
 
 
 # Настройка статических файлов
-STATIC_URL = 'static/' # URL статики
-STATIC_ROOT = BASE_DIR / 'staticfiles' # Путь для собранных файлов статики
+STATIC_URL = "static/"  # URL статики
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Путь для собранных файлов статики
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # Настройки Django REST Framework
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',  # Разрешить доступ всем
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",  # Разрешить доступ всем
     ],
-    'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.AnonRateThrottle',  # Ограничение запросов для анонимных пользователей
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",  # Ограничение запросов для анонимных пользователей
     ],
-    'DEFAULT_THROTTLE_RATES': {
-        'anon': '100/hour',  # Лимит запросов для анонимных пользователей
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "100/hour",  # Лимит запросов для анонимных пользователей
     },
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',  # Рендеринг в JSON
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",  # Рендеринг в JSON
     ],
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',  # Парсинг JSON-данных
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",  # Парсинг JSON-данных
     ],
 }
 
@@ -172,34 +176,34 @@ REST_FRAMEWORK = {
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    CORS_ALLOWED_ORIGINS = [ # Разрешенные источники
-        'http://localhost:5173',
-        'http://127.0.0.1:5173',
+    CORS_ALLOWED_ORIGINS = [  # Разрешенные источники
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
     ]
 
 
 # Настройки безопасности
 SECURE_BROWSER_XSS_FILTER = True  # Защита от XSS-атак
 SECURE_CONTENT_TYPE_NOSNIFF = True  # Запрет MIME-типов
-X_FRAME_OPTIONS = 'DENY'  # Защита от кликджекинга
+X_FRAME_OPTIONS = "DENY"  # Защита от кликджекинга
 
 
 # Настройки логирования
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'INFO',  # Уровень логирования
-            'class': 'logging.FileHandler',  # Логирование в файл
-            'filename': BASE_DIR / 'debug.log',  # Путь к файлу логов
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "INFO",  # Уровень логирования
+            "class": "logging.FileHandler",  # Логирование в файл
+            "filename": BASE_DIR / "debug.log",  # Путь к файлу логов
         },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],  # Используемый обработчик
-            'level': 'INFO',  # Уровень логирования
-            'propagate': True,  # Передача логов родительским логгерам
+    "loggers": {
+        "django": {
+            "handlers": ["file"],  # Используемый обработчик
+            "level": "INFO",  # Уровень логирования
+            "propagate": True,  # Передача логов родительским логгерам
         },
     },
 }
