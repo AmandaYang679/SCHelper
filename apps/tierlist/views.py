@@ -2,14 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Item
 from .serializers import *
-import json
-from .infoblocks.weapon_infoblock.assault_rifle import Assault_rifle
-from .infoblocks.aggregate import Aggregate
 
 
 class ItemListView(APIView):
     serializers = {
         "weapon/assault_rifle": AssaultRifleWeaponItemSerializer,
+        "medicine": MedicineItemSerializer
     }
 
     def get_serializer_for_category(self, category):
@@ -23,23 +21,23 @@ class ItemListView(APIView):
         return BaseItemSerializer
 
     def get(self, request):
-        en_name = request.GET.get("en_name")
+        name = request.GET.get("name")
         category = request.GET.get("category")
-        en_rank = request.GET.get("en_rank")
+        rank = request.GET.get("rank")
 
-        # filters = {}
-        # if category:
-        #     filters["category"] = category
-        # if en_name:
-        #     filters["en_name"] = en_name
-        # if en_rank:
-        #     filters["en_rank"] = en_rank
+        filters = {}
+        if category:
+            filters["category"] = category
+        if name:
+            filters["name"] = name
+        if rank:
+            filters["rank"] = rank
 
-        # items = Item.objects.filter(**filters)
-        items = Item.objects.filter(category="medicine")
+        items = Item.objects.filter(**filters)
+        # items = Item.objects.filter(category="medicine")
         response = []
         for item in items:
-        # serializer_class = self.get_serializer_for_category(category)
-            serializer = MedicineItemSerializer(item)
+            serializer_class = self.get_serializer_for_category(item.category)
+            serializer = serializer_class(item)
             response.append(serializer.data)
         return Response(response)
