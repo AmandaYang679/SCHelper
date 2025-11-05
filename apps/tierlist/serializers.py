@@ -1,9 +1,57 @@
+from itertools import chain
 from rest_framework import serializers
 from .models import Item
+import jmespath
+from apps.tierlist.infoblocks.aggregate import Aggregate
+from apps.tierlist.infoblocks.block import *
+from apps.tierlist.infoblocks.weapon_infoblock.assault_rifle import Assault_rifle
+from apps.tierlist.infoblocks.medicine import Medicine
 
 
-class ItemSerializer(serializers.ModelSerializer):
+
+class BaseItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ("id", "ru_name", "en_name", "icon", "category", "color", "status", "status", "infoblocks")
-        read_only_fields = ("id", "ru_name", "en_name", "icon", "category", "color", "status", "status", "infoblocks")
+        fields = ("id", "name", "icon", "category", "rank")
+        read_only_fields = ("id", "name", "icon", "category", "rank")
+
+
+class AssaultRifleWeaponItemSerializer(BaseItemSerializer):
+    stats = serializers.SerializerMethodField()
+    
+    class Meta(BaseItemSerializer.Meta):
+        fields = BaseItemSerializer.Meta.fields + ("stats",)
+        
+    def get_stats(self, obj: Item):
+        aggregate = Aggregate(obj)
+        aggregate.set_blocks(Assault_rifle(obj.infoblocks))
+        return {}
+        
+        
+class MedicineItemSerializer(BaseItemSerializer):
+    stats = serializers.SerializerMethodField()
+    
+    class Meta(BaseItemSerializer.Meta):
+        fields = BaseItemSerializer.Meta.fields + ("stats",)
+        
+    def get_stats(self, obj):
+        aggregate = Aggregate(obj)
+        aggregate.set_blocks(Medicine(obj.infoblocks))
+
+        stats_map = {
+            "stamina": aggregate.get_stamina_bonus,
+            "duration": aggregate.get_medicine_duration,
+            "hp_regen": aggregate.get_medicine_hp_regen,
+            "toxicity": aggregate.get_medicine_toxicity,
+        }
+
+        data = {}
+
+        for key, func in stats_map.items():
+            try:
+                name, value = func()
+                data[name] = value
+            except Exception:
+                data[key] = None
+
+        return data
