@@ -19,31 +19,31 @@ class TooltipMedicine:
                 self.medicine_toxicity = self.instance(elem["type"], "stalker.tooltip.medicine.info.toxicity", elem)
 
     def get_stamina_bonus(self):
-        return (self.stamina_bonus.get_name(), self.stamina_bonus.get_value())
+        return self.stamina_bonus.get_value()
     
     
     def get_medicine_priority(self):
-        return (self.name, self.value)
+        return self.medicine_priority.get_value()
     
     
     def get_medicine_duration(self):
-        return (self.medicine_duration.get_name(), self.medicine_duration.get_value())
+        return self.medicine_duration.get_value()
     
     
     def get_medicine_hp_regen(self):
-        return (self.medicine_hp_regen.get_name(), self.medicine_hp_regen.get_value())
+        return self.medicine_hp_regen.get_value()
     
     
     def get_medicine_toxicity(self):
-        return (self.medicine_toxicity.get_name(), self.medicine_toxicity.get_value())
+        return self.medicine_toxicity.get_value()
     
     
-    def instance(self, class_type, element_type, elem):
+    def instance(self, class_type, element_key, elem):
         try:
             if class_type == "numeric":
-                return ElementNumeric(elem, element_type)
+                return ElementNumeric(elem, element_key)
             elif class_type == "key-value":
-                return ElementKeyValue(elem, element_type)
+                return ElementKeyValue(elem, element_key)
         except:
             pass
 

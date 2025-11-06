@@ -2,7 +2,7 @@ from itertools import chain
 from rest_framework import serializers
 from .models import Item
 import jmespath
-from apps.tierlist.infoblocks.aggregate import Aggregate
+from apps.tierlist.infoblocks.aggregate import MedicineAggregate
 from apps.tierlist.infoblocks.block import *
 from apps.tierlist.infoblocks.weapon_infoblock.assault_rifle import Assault_rifle
 from apps.tierlist.infoblocks.medicine import Medicine
@@ -23,7 +23,7 @@ class AssaultRifleWeaponItemSerializer(BaseItemSerializer):
         fields = BaseItemSerializer.Meta.fields + ("stats",)
         
     def get_stats(self, obj: Item):
-        aggregate = Aggregate(obj)
+        aggregate = MedicineAggregate(obj)
         aggregate.set_blocks(Assault_rifle(obj.infoblocks))
         return {}
         
@@ -35,21 +35,22 @@ class MedicineItemSerializer(BaseItemSerializer):
         fields = BaseItemSerializer.Meta.fields + ("stats",)
         
     def get_stats(self, obj):
-        aggregate = Aggregate(obj)
+        aggregate = MedicineAggregate(obj)
         aggregate.set_blocks(Medicine(obj.infoblocks))
 
         stats_map = {
             "stamina": aggregate.get_stamina_bonus,
+            "priority": aggregate.get_medicine_priority,
             "duration": aggregate.get_medicine_duration,
             "hp_regen": aggregate.get_medicine_hp_regen,
-            "toxicity": aggregate.get_medicine_toxicity,
+            "poison": aggregate.get_medicine_toxicity,
         }
 
         data = {}
 
         for key, func in stats_map.items():
             try:
-                name, value = func()
+                name, value = key, func()
                 data[name] = value
             except Exception:
                 data[key] = None

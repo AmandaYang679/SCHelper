@@ -28,22 +28,17 @@ import json
 
 
 class ElementKeyValue():
-    def parse(self, block: dict, element_type: str):
+    def parse(self, block: dict, element_key: str):
         name = block["key"]
-        if name["key"] == element_type:
-            self.name = name["lines"]
-            self.value = block["lines"]
+        if name["key"] == element_key:
+            self.value = block["value"]
         else:
             raise Exception("Incorrect block type")
 
 
-    def get_name(self):
-        return self.name
-    
     def get_value(self):
         return self.value
 
-    def __init__(self, block: dict, element_type: str):
-        self.name = None
+    def __init__(self, block: dict, element_key: str):
         self.value = None
-        self.parse(block, element_type)
+        self.parse(block, element_key)
