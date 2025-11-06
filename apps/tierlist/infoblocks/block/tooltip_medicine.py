@@ -8,34 +8,85 @@ class TooltipMedicine:
     def parse(self):
         for elem in self.block["elements"]:
             if self.stamina_bonus == None:
-                self.stamina_bonus = self.instance(elem["type"], "stalker.artefact_properties.factor.stamina_bonus", elem)
+                self.stamina_bonus = self.instance(elem["type"], self._get_type("stamina_bonus"), elem)
             if self.medicine_priority == None:
-                self.medicine_priority = self.instance(elem["type"], "stalker.tooltip.medicine.info.priority", elem)
+                self.medicine_priority = self.instance(elem["type"], self._get_type("priority"), elem)
             if self.medicine_duration == None:
-                self.medicine_duration = self.instance(elem["type"], "stalker.tooltip.medicine.info.duration", elem)
+                self.medicine_duration = self.instance(elem["type"], self._get_type("duration"), elem)
             if self.medicine_hp_regen == None:
-                self.medicine_hp_regen = self.instance(elem["type"], "stalker.tooltip.medicine.info.hp_regen", elem)
+                self.medicine_hp_regen = self.instance(elem["type"], self._get_type("hp_regen"), elem)
             if self.medicine_toxicity == None:
-                self.medicine_toxicity = self.instance(elem["type"], "stalker.tooltip.medicine.info.toxicity", elem)
+                self.medicine_toxicity = self.instance(elem["type"], self._get_type("toxicity"), elem)
 
     def get_stamina_bonus(self):
-        return self.stamina_bonus.get_value()
+        if self.stamina_bonus != None:
+            return (self._get_type_name("stamina_bonus"), self.stamina_bonus.get_value())
+        else:
+            return (self._get_type_name("stamina_bonus"), "")
     
     
     def get_medicine_priority(self):
-        return self.medicine_priority.get_value()
+        if self.medicine_priority != None:
+            return (self._get_type_name("priority"), self.medicine_priority.get_value())
+        else:
+            return (self._get_type_name("priority"), "")
     
     
     def get_medicine_duration(self):
-        return self.medicine_duration.get_value()
+        # print(self.medicine_duration)
+        if self.medicine_duration != None:
+            return (self._get_type_name("duration"), self.medicine_duration.get_value())
+        else:
+            return (self._get_type_name("duration"), "")
     
     
     def get_medicine_hp_regen(self):
-        return self.medicine_hp_regen.get_value()
+        if self.medicine_hp_regen != None:
+            return (self._get_type_name("hp_regen"), self.medicine_hp_regen.get_value())
+        else:
+            return (self._get_type_name("hp_regen"), "")
     
     
     def get_medicine_toxicity(self):
-        return self.medicine_toxicity.get_value()
+        if self.medicine_toxicity != None:
+            return (self._get_type_name("toxicity"), self.medicine_toxicity.get_value())
+        else:
+            return (self._get_type_name("toxicity"), "")
+    
+    
+    def _type_name_map(self):
+        return {
+            "stamina_bonus": {
+                "name": "stamina_bonus",
+                "type": "stalker.artefact_properties.factor.stamina_bonus",
+            },
+            "priority": {
+                "name": "priority",
+                "type": "stalker.tooltip.medicine.info.priority",
+            },
+            "duration": {
+                "name": "duration",
+                "type": "stalker.tooltip.medicine.info.duration",
+            },
+            "hp_regen": {
+                "name": "hp_regen",
+                "type": "stalker.tooltip.medicine.info.hp_regen",
+            },
+            "toxicity": {
+                "name": "toxicity",
+                "type": "stalker.tooltip.medicine.info.toxicity",
+            }
+        }
+    
+    
+    def _get_type_name(self, type_name):
+        key = self._type_name_map()[type_name]
+        return key["name"]
+    
+    
+    def _get_type(self, type_name):
+        key = self._type_name_map()[type_name]
+        return key["type"]
     
     
     def instance(self, class_type, element_key, elem):

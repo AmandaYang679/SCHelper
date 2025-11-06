@@ -2,7 +2,7 @@ from itertools import chain
 from rest_framework import serializers
 from .models import Item
 import jmespath
-from apps.tierlist.infoblocks.aggregate import MedicineAggregate
+from apps.tierlist.infoblocks.aggregate import MedicineAggregate, AssaultRifleAggregate
 from apps.tierlist.infoblocks.block import *
 from apps.tierlist.infoblocks.weapon_infoblock.assault_rifle import Assault_rifle
 from apps.tierlist.infoblocks.medicine import Medicine
@@ -23,29 +23,13 @@ class AssaultRifleWeaponItemSerializer(BaseItemSerializer):
         fields = BaseItemSerializer.Meta.fields + ("stats",)
         
     def get_stats(self, obj: Item):
-        aggregate = MedicineAggregate(obj)
+        aggregate = AssaultRifleAggregate(obj)
         aggregate.set_blocks(Assault_rifle(obj.infoblocks))
-        return {}
         
-        
-class MedicineItemSerializer(BaseItemSerializer):
-    stats = serializers.SerializerMethodField()
-    
-    class Meta(BaseItemSerializer.Meta):
-        fields = BaseItemSerializer.Meta.fields + ("stats",)
-        
-    def get_stats(self, obj):
-        aggregate = MedicineAggregate(obj)
-        aggregate.set_blocks(Medicine(obj.infoblocks))
-
         stats_map = {
-            "stamina": aggregate.get_stamina_bonus,
-            "priority": aggregate.get_medicine_priority,
-            "duration": aggregate.get_medicine_duration,
-            "hp_regen": aggregate.get_medicine_hp_regen,
-            "poison": aggregate.get_medicine_toxicity,
+            "max_durability": aggregate.get_max_durability,
         }
-
+    
         data = {}
 
         for key, func in stats_map.items():
@@ -54,5 +38,21 @@ class MedicineItemSerializer(BaseItemSerializer):
                 data[name] = value
             except Exception:
                 data[key] = None
+        
+        return data
+        
+        
+class MedicineItemSerializer(BaseItemSerializer):
+    stats = serializers.SerializerMethodField()
+    
+    class Meta(BaseItemSerializer.Meta):
+        fields = BaseItemSerializer.Meta.fields + ("stats",)
+        
+    def get_stats(self, obj: Item):
+        aggregate = MedicineAggregate(Medicine(obj.infoblocks))
+
+        data = {}
+        for key, val in aggregate.to_dict().items():
+            data[key] = val
 
         return data
