@@ -16,6 +16,35 @@ class BaseItemSerializer(serializers.ModelSerializer):
         read_only_fields = ("id", "name", "icon", "category", "rank")
 
 
+class MedicineItemSerializer(BaseItemSerializer):
+    stats = serializers.SerializerMethodField()
+    
+    class Meta(BaseItemSerializer.Meta):
+        fields = BaseItemSerializer.Meta.fields + ("stats",)
+        
+    def get_stats(self, obj: Item):
+        aggregate = MedicineAggregate(Medicine(obj.infoblocks))
+        
+        stats_map = {
+            "stamina": aggregate.get_stamina_bonus,
+            "priority": aggregate.get_medicine_priority,
+            "duration": aggregate.get_medicine_duration,
+            "hp_regen": aggregate.get_medicine_hp_regen,
+            "poison": aggregate.get_medicine_toxicity,
+        }
+        
+        data = {}
+        
+        for key, func in stats_map.items():
+            try:
+                name, value = key, func()
+                data[name] = value
+            except Exception:
+                data[key] = None
+
+        return data
+    
+    
 class AssaultRifleWeaponItemSerializer(BaseItemSerializer):
     stats = serializers.SerializerMethodField()
     
@@ -42,17 +71,3 @@ class AssaultRifleWeaponItemSerializer(BaseItemSerializer):
         return data
         
         
-class MedicineItemSerializer(BaseItemSerializer):
-    stats = serializers.SerializerMethodField()
-    
-    class Meta(BaseItemSerializer.Meta):
-        fields = BaseItemSerializer.Meta.fields + ("stats",)
-        
-    def get_stats(self, obj: Item):
-        aggregate = MedicineAggregate(Medicine(obj.infoblocks))
-
-        data = {}
-        for key, val in aggregate.to_dict().items():
-            data[key] = val
-
-        return data

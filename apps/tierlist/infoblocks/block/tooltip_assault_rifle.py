@@ -9,8 +9,8 @@ class TooltipAssaultRifle:
                 self.max_durability = self.instance(elem["type"], "core.tooltip.info.max_durability", elem)
 
 
-    def get_durability(self):
-        return (self.max_durability.get_name(), self.max_durability.get_value())
+    def get_max_durability(self):
+        return self.max_durability.get_value()
 
     
     def instance(self, class_type, element_key, elem):

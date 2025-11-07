@@ -19,39 +19,23 @@ class TooltipMedicine:
                 self.medicine_toxicity = self.instance(elem["type"], self._get_type("toxicity"), elem)
 
     def get_stamina_bonus(self):
-        if self.stamina_bonus != None:
-            return (self._get_type_name("stamina_bonus"), self.stamina_bonus.get_value())
-        else:
-            return (self._get_type_name("stamina_bonus"), "")
+        return self.stamina_bonus.get_value()
     
     
     def get_medicine_priority(self):
-        if self.medicine_priority != None:
-            return (self._get_type_name("priority"), self.medicine_priority.get_value())
-        else:
-            return (self._get_type_name("priority"), "")
+        return self.medicine_priority.get_value()
     
     
     def get_medicine_duration(self):
-        # print(self.medicine_duration)
-        if self.medicine_duration != None:
-            return (self._get_type_name("duration"), self.medicine_duration.get_value())
-        else:
-            return (self._get_type_name("duration"), "")
+        return self.medicine_duration.get_value()
     
     
     def get_medicine_hp_regen(self):
-        if self.medicine_hp_regen != None:
-            return (self._get_type_name("hp_regen"), self.medicine_hp_regen.get_value())
-        else:
-            return (self._get_type_name("hp_regen"), "")
+        return self.medicine_hp_regen.get_value()
     
     
     def get_medicine_toxicity(self):
-        if self.medicine_toxicity != None:
-            return (self._get_type_name("toxicity"), self.medicine_toxicity.get_value())
-        else:
-            return (self._get_type_name("toxicity"), "")
+        return self.medicine_toxicity.get_value()
     
     
     def _type_name_map(self):

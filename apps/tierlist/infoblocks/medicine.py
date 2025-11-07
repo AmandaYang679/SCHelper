@@ -4,7 +4,6 @@ from apps.tierlist.infoblocks.block.tooltip_medicine import TooltipMedicine
 class Medicine:
     def parse(self, infoblocks: list):
         for block in infoblocks:
-            # print(block, type(block))
             try:
                 self.blocks.append(TooltipMedicine(block))
                 
@@ -56,4 +55,3 @@ class Medicine:
     def __init__(self, infoblocks: list):
         self.blocks = []
         self.parse(infoblocks)
-        # print(self.blocks)

@@ -1,4 +1,3 @@
-import json
 from apps.tierlist.infoblocks.block.tooltip_assault_rifle import TooltipAssaultRifle
 
 
@@ -13,10 +12,10 @@ class Assault_rifle:
                 pass
     
     
-    def get_durability(self):
+    def get_max_durability(self):
         for block in self.blocks:
             try:
-                return block.get_durability()
+                return block.get_max_durability()
             except:
                 pass
             
@@ -24,4 +23,3 @@ class Assault_rifle:
     def __init__(self, infoblocks: list):
         self.blocks = []
         self.parse(infoblocks)
-        # print(self.blocks)
