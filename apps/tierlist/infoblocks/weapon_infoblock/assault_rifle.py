@@ -10,36 +10,12 @@ class Assault_rifle:
             except Exception as e:
                 # print("error", e)
                 pass
-    
-    
-    def get_damage(self):
-        for block in self.blocks:
-            try:
-                return block.get_damage()
-            except:
-                pass
-    
-    
-    def get_rate_of_fire(self):
-        for block in self.blocks:
-            try:
-                return block.get_rate_of_fire()
-            except:
-                pass
             
             
-    def get_aiming_time(self):
+    def get_weight(self):
         for block in self.blocks:
             try:
-                return block.get_aiming_time()
-            except:
-                pass
-            
-            
-    def get_draw_time(self):
-        for block in self.blocks:
-            try:
-                return block.get_draw_time()
+                return block.get_weight()
             except:
                 pass
             
@@ -60,26 +36,26 @@ class Assault_rifle:
                 pass
             
             
-    def get_hip_fire_spread(self):
+    def get_ammo_type(self):
         for block in self.blocks:
             try:
-                return block.get_hip_fire_spread()
+                return block.get_ammo_type()
+            except:
+                pass
+    
+    
+    def get_damage(self):
+        for block in self.blocks:
+            try:
+                return block.get_damage()
             except:
                 pass
             
             
-    def get_horizontal_recoil(self):
+    def get_clip_size(self):
         for block in self.blocks:
             try:
-                return block.get_horizontal_recoil()
-            except:
-                pass
-            
-            
-    def get_vertical_recoil(self):
-        for block in self.blocks:
-            try:
-                return block.get_vertical_recoil()
+                return block.get_clip_size()
             except:
                 pass
             
@@ -90,12 +66,12 @@ class Assault_rifle:
                 return block.get_max_distance()
             except:
                 pass
-            
-            
-    def get_clip_size(self):
+    
+    
+    def get_rate_of_fire(self):
         for block in self.blocks:
             try:
-                return block.get_clip_size()
+                return block.get_rate_of_fire()
             except:
                 pass
             
@@ -124,18 +100,42 @@ class Assault_rifle:
                 pass
             
             
-    def get_weight(self):
+    def get_hip_fire_spread(self):
         for block in self.blocks:
             try:
-                return block.get_weight()
+                return block.get_hip_fire_spread()
             except:
                 pass
             
             
-    def get_ammo_type(self):
+    def get_horizontal_recoil(self):
         for block in self.blocks:
             try:
-                return block.get_ammo_type()
+                return block.get_horizontal_recoil()
+            except:
+                pass
+            
+            
+    def get_vertical_recoil(self):
+        for block in self.blocks:
+            try:
+                return block.get_vertical_recoil()
+            except:
+                pass
+            
+            
+    def get_draw_time(self):
+        for block in self.blocks:
+            try:
+                return block.get_draw_time()
+            except:
+                pass
+            
+            
+    def get_aiming_time(self):
+        for block in self.blocks:
+            try:
+                return block.get_aiming_time()
             except:
                 pass
             

@@ -55,22 +55,22 @@ class AssaultRifleWeaponItemSerializer(BaseItemSerializer):
         aggregate = AssaultRifleAggregate(Assault_rifle(obj.infoblocks))
         
         stats_map = {
-            "damage": aggregate.get_damage,
-            "rate_of_fire": aggregate.get_rate_of_fire,
-            "aiming_time": aggregate.get_aiming_time,
-            "draw_time": aggregate.get_draw_time,
+            "weight": aggregate.get_weight,
             "durability": aggregate.get_durability,
             "max_durability": aggregate.get_max_durability,
-            "hip_spread": aggregate.get_hip_fire_spread,
-            "horizontal_recoil": aggregate.get_horizontal_recoil,
-            "vertical_recoil": aggregate.get_vertical_recoil,
-            "clip_size": aggregate.get_clip_size,
+            "ammo_type": aggregate.get_ammo_type,
+            "damage": aggregate.get_damage,
+            "clip_capacity": aggregate.get_clip_size,
             "max_distance": aggregate.get_max_distance,
+            "rate_of_fire": aggregate.get_rate_of_fire,
             "reload": aggregate.get_reload_time,
             "tactical_reload": aggregate.get_tactical_reload_time,
             "spread": aggregate.get_spread,
-            "weight": aggregate.get_weight,
-            "ammo_type": aggregate.get_ammo_type,
+            "hip_spread": aggregate.get_hip_fire_spread,
+            "horizontal_recoil": aggregate.get_horizontal_recoil,
+            "vertical_recoil": aggregate.get_vertical_recoil,
+            "draw_time": aggregate.get_draw_time,
+            "aiming_time": aggregate.get_aiming_time,
         }
     
         data = {}
