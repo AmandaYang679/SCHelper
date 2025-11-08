@@ -139,6 +139,14 @@ class Assault_rifle:
             except:
                 pass
             
+            
+    def get_movement_speed(self):
+        for block in self.blocks:
+            try:
+                return block.get_movement_speed()
+            except:
+                pass
+            
 
     def __init__(self, infoblocks: list):
         self.blocks = []

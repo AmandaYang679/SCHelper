@@ -71,6 +71,7 @@ class AssaultRifleWeaponItemSerializer(BaseItemSerializer):
             "vertical_recoil": aggregate.get_vertical_recoil,
             "draw_time": aggregate.get_draw_time,
             "aiming_time": aggregate.get_aiming_time,
+            "movement_speed": aggregate.get_movement_speed,
         }
     
         data = {}

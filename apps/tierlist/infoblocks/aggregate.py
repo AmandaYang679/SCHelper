@@ -90,3 +90,6 @@ class AssaultRifleAggregate:
     def get_aiming_time(self):
         return self.blocks.get_aiming_time()
     
+    def get_movement_speed(self):
+        return self.blocks.get_movement_speed()
+    

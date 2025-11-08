@@ -37,6 +37,8 @@ class TooltipAssaultRifle:
                 self.draw_time = self.instance(elem["type"], self._get_key("draw_time"), elem)
             if self.aiming_time == None:
                 self.aiming_time = self.instance(elem["type"], self._get_key("aiming_time"), elem)
+            if self.movement_speed == None:
+                self.movement_speed = self.instance(elem["type"], self._get_key("movement_speed"), elem)
     
     
     def get_weight(self):
@@ -101,6 +103,10 @@ class TooltipAssaultRifle:
 
     def get_aiming_time(self):
         return self.aiming_time.get_value()
+
+
+    def get_movement_speed(self):
+        return self.movement_speed.get_value()
     
     
     def _key_name_map(self):
@@ -169,6 +175,10 @@ class TooltipAssaultRifle:
                 "name": "aiming_time",
                 "key": "weapon.tooltip.weapon.info.aim_switch",
             },
+            "movement_speed": {
+                "name": "movement_speed",
+                "key": "stalker.artefact_properties.factor.speed_modifier",
+            },
         }
     
     
@@ -204,6 +214,7 @@ class TooltipAssaultRifle:
         self.vertical_recoil = None
         self.draw_time = None
         self.aiming_time = None
+        self.movement_speed = None
         
         self.block = block
         self.parse()
