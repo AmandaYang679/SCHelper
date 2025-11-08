@@ -24,14 +24,14 @@
 #     }
 # },
 
-import json
-
 
 class ElementKeyValue():
     def parse(self, block: dict, element_key: str):
         name = block["key"]
         if name["key"] == element_key:
-            self.value = block["value"]
+            v = block["value"]
+            vv = v["lines"]
+            self.value = vv["en"]
         else:
             raise Exception("Incorrect block type")
 
