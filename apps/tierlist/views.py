@@ -6,7 +6,7 @@ from .serializers import *
 
 class ItemListView(APIView):
     serializers = {
-        "weapon-assault_rifle": AssaultRifleWeaponItemSerializer,
+        "weapon-assault-rifle": AssaultRifleWeaponItemSerializer,
         "medicine": MedicineItemSerializer
     }
 
