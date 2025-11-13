@@ -1,8 +1,10 @@
 from itertools import chain
 from rest_framework import serializers
+
+from apps.tierlist.infoblocks.weapon_infoblock.device import Device
 from .models import Item
 import jmespath
-from apps.tierlist.infoblocks.aggregate import MedicineAggregate, AssaultRifleAggregate
+from apps.tierlist.infoblocks.aggregate import MedicineAggregate, AssaultRifleAggregate, DeviceAggregate
 from apps.tierlist.infoblocks.block import *
 from apps.tierlist.infoblocks.weapon_infoblock.assault_rifle import Assault_rifle
 from apps.tierlist.infoblocks.medicine import Medicine
@@ -85,4 +87,33 @@ class AssaultRifleWeaponItemSerializer(BaseItemSerializer):
         
         return data
         
+
+class DeviceWeaponItemSerializer(BaseItemSerializer):
+    stats = serializers.SerializerMethodField()
+    
+    class Meta(BaseItemSerializer.Meta):
+        fields = BaseItemSerializer.Meta.fields + ("stats",)
         
+    def get_stats(self, obj: Item):
+        aggregate = DeviceAggregate(Device(obj.infoblocks))
+        
+        stats_map = {
+            "weight": aggregate.get_weight,
+            "durability": aggregate.get_durability,
+            "max_durability": aggregate.get_max_durability,
+            "charge": aggregate.get_charge,
+            "passive_radiurs": aggregate.get_passive_radius,
+            "active_radiurs": aggregate.get_active_radius,
+            "scan_angle": aggregate.get_scan_angle,
+        }
+        
+        data = {}
+        
+        for key, func in stats_map.items():
+            try:
+                name, value = key, func()
+                data[name] = value
+            except Exception:
+                data[key] = None
+        
+        return data

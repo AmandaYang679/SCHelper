@@ -36,8 +36,6 @@ class MedicineAggregate:
         return self.blocks.get_medicine_toxicity()
     
     
-
-
 class AssaultRifleAggregate:
     def __init__(self, infoblocks):
         self.blocks = infoblocks
@@ -92,4 +90,29 @@ class AssaultRifleAggregate:
     
     def get_movement_speed(self):
         return self.blocks.get_movement_speed()
+
+
+class DeviceAggregate:
+    def __init__(self, infoblocks):
+        self.blocks = infoblocks
+        
+    def get_weight(self):
+        return self.blocks.get_weight()
     
+    def get_durability(self):
+        return self.blocks.get_durability()
+    
+    def get_max_durability(self):
+        return self.blocks.get_max_durability()
+    
+    def get_charge(self):
+        return self.blocks.get_charge()
+    
+    def get_passive_radius(self):
+        return self.blocks.get_passive_radius()
+    
+    def get_active_radius(self):
+        return self.blocks.get_active_radius()
+    
+    def get_scan_angle(self):
+        return self.blocks.get_scan_angle()

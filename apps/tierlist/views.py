@@ -7,7 +7,8 @@ from .serializers import *
 class ItemListView(APIView):
     serializers = {
         "weapon-assault-rifle": AssaultRifleWeaponItemSerializer,
-        "medicine": MedicineItemSerializer
+        "weapon-device": DeviceWeaponItemSerializer,
+        "medicine": MedicineItemSerializer,
     }
 
     def get_serializer_for_category(self, category):
