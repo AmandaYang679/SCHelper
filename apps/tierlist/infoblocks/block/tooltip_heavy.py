@@ -2,7 +2,7 @@ from .element_numeric import ElementNumeric
 from .element_key_value import ElementKeyValue
 
 
-class TooltipAssaultRifle:
+class TooltipHeavy:
     def parse(self):
         for elem in self.block["elements"]:
             if self.weight == None:
@@ -11,10 +11,10 @@ class TooltipAssaultRifle:
                 self.durability = self.instance(elem["type"], self._get_key("durability"), elem)
             if self.max_durability == None:
                 self.max_durability = self.instance(elem["type"], self._get_key("max_durability"), elem)
+            if self.movement_speed == None:
+                self.movement_speed = self.instance(elem["type"], self._get_key("movement_speed"), elem)
             if self.ammo_type == None:
                 self.ammo_type = self.instance(elem["type"], self._get_key("ammo_type"), elem)
-            if self.damage == None:
-                self.damage = self.instance(elem["type"], self._get_key("damage"), elem)
             if self.clip_size == None:
                 self.clip_size = self.instance(elem["type"], self._get_key("clip_size"), elem)
             if self.max_distance == None:
@@ -41,8 +41,8 @@ class TooltipAssaultRifle:
                 self.aiming_time = self.instance(elem["type"], self._get_key("aiming_time"), elem)
             if self.movement_speed == None:
                 self.movement_speed = self.instance(elem["type"], self._get_key("movement_speed"), elem)
-    
-    
+                
+                
     def get_weight(self):
         return self.weight.get_value()
     
@@ -55,12 +55,12 @@ class TooltipAssaultRifle:
         return self.max_durability.get_value()
     
     
+    def get_movement_speed(self):
+        return self.movement_speed.get_value()
+    
+    
     def get_ammo_type(self):
         return self.ammo_type.get_value()
-
-
-    def get_damage(self):
-        return self.damage.get_value()
     
     
     def get_clip_size(self):
@@ -81,8 +81,8 @@ class TooltipAssaultRifle:
     
     def get_tactical_reload_time(self):
         return self.tactical_reload_time.get_value()
-
-
+    
+    
     def get_reload_modifier(self):
         return self.reload_modifier.get_value()
     
@@ -129,13 +129,13 @@ class TooltipAssaultRifle:
                 "name": "max_durability",
                 "key": "core.tooltip.info.max_durability",
             },
+            "movement_speed": {
+                "name": "movement_speed",
+                "key": "stalker.artefact_properties.factor.speed_modifier",
+            },
             "ammo_type": {
                 "name": "ammo_type",
                 "key": "weapon.tooltip.weapon.info.ammo_type",
-            },
-            "damage": {
-                "name": "damage",
-                "key": "core.tooltip.stat_name.damage_type.direct",
             },
             "clip_size": {
                 "name": "clip_size",
@@ -190,8 +190,8 @@ class TooltipAssaultRifle:
                 "key": "stalker.artefact_properties.factor.speed_modifier",
             },
         }
-    
-    
+        
+        
     def _get_key(self, name):
         response = self._key_name_map()[name]
         return response["key"]
@@ -211,8 +211,8 @@ class TooltipAssaultRifle:
         self.weight = None
         self.durability = None
         self.max_durability = None
+        self.movement_speed = None
         self.ammo_type = None
-        self.damage = None
         self.clip_size = None
         self.max_distance = None
         self.rate_of_fire = None

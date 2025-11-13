@@ -1,17 +1,16 @@
-from apps.tierlist.infoblocks.block.tooltip_assault_rifle import TooltipAssaultRifle
+from apps.tierlist.infoblocks.block.tooltip_heavy import TooltipHeavy
 
 
-class Assault_rifle:
+class Heavy:
     def parse(self, infoblocks: list):
         for block in infoblocks:
             try:
-                self.blocks.append(TooltipAssaultRifle(block))
-                
+                self.blocks.append(TooltipHeavy(block))
             except Exception as e:
                 # print("error", e)
                 pass
-            
-            
+    
+    
     def get_weight(self):
         for block in self.blocks:
             try:
@@ -36,18 +35,18 @@ class Assault_rifle:
                 pass
             
             
+    def get_movement_speed(self):
+        for block in self.blocks:
+            try:
+                return block.get_movement_speed()
+            except:
+                pass
+            
+            
     def get_ammo_type(self):
         for block in self.blocks:
             try:
                 return block.get_ammo_type()
-            except:
-                pass
-    
-    
-    def get_damage(self):
-        for block in self.blocks:
-            try:
-                return block.get_damage()
             except:
                 pass
             
@@ -91,7 +90,7 @@ class Assault_rifle:
             except:
                 pass
             
-
+            
     def get_reload_modifier(self):
         for block in self.blocks:
             try:
@@ -155,7 +154,7 @@ class Assault_rifle:
             except:
                 pass
             
-
+            
     def __init__(self, infoblocks: list):
         self.blocks = []
         self.parse(infoblocks)

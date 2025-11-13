@@ -8,6 +8,7 @@ class ItemListView(APIView):
     serializers = {
         "weapon-assault-rifle": AssaultRifleWeaponItemSerializer,
         "weapon-device": DeviceWeaponItemSerializer,
+        "weapon-heavy": HeavyWeaponItemSerializer,
         "medicine": MedicineItemSerializer,
     }
 
@@ -35,8 +36,8 @@ class ItemListView(APIView):
             filters["rank"] = rank
 
         items = Item.objects.filter(**filters)
-        # items = Item.objects.filter(category="medicine")
         response = []
+        
         for item in items:
             serializer_class = self.get_serializer_for_category(item.category)
             serializer = serializer_class(item)
