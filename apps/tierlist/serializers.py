@@ -1,15 +1,11 @@
-from itertools import chain
 from rest_framework import serializers
-
 from apps.tierlist.infoblocks.weapon_infoblock.device import Device
 from apps.tierlist.infoblocks.weapon_infoblock.heavy import Heavy
 from .models import Item
-import jmespath
 from apps.tierlist.infoblocks.aggregate import MedicineAggregate, AssaultRifleAggregate, DeviceAggregate, HeavyAggregate
 from apps.tierlist.infoblocks.block import *
 from apps.tierlist.infoblocks.weapon_infoblock.assault_rifle import Assault_rifle
 from apps.tierlist.infoblocks.medicine import Medicine
-
 
 
 class BaseItemSerializer(serializers.ModelSerializer):
