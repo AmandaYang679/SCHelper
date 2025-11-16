@@ -1,11 +1,11 @@
-from apps.tierlist.infoblocks.block.tooltip_heavy import TooltipHeavy
+from apps.tierlist.infoblocks.block.tooltip_machine_gun import TooltipMachineGun
 
 
-class Heavy:
+class MachineGun:
     def parse(self, infoblocks: list):
         for block in infoblocks:
             try:
-                self.blocks.append(TooltipHeavy(block))
+                self.blocks.append(TooltipMachineGun(block))
             except Exception as e:
                 # print("error", e)
                 pass

@@ -9,6 +9,7 @@ class ItemListView(APIView):
         "weapon-assault-rifle": AssaultRifleWeaponItemSerializer,
         "weapon-device": DeviceWeaponItemSerializer,
         "weapon-heavy": HeavyWeaponItemSerializer,
+        "weapon-machine-gun": MachineGunWeaponItemSerializer,
         "medicine": MedicineItemSerializer,
     }
 

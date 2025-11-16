@@ -2,7 +2,7 @@ from .element_numeric import ElementNumeric
 from .element_key_value import ElementKeyValue
 
 
-class TooltipHeavy:
+class TooltipMachineGun:
     def parse(self):
         for elem in self.block["elements"]:
             if self.weight == None:
@@ -43,6 +43,8 @@ class TooltipHeavy:
                 self.aiming_time = self.instance(elem["type"], self._get_key("aiming_time"), elem)
             if self.movement_speed == None:
                 self.movement_speed = self.instance(elem["type"], self._get_key("movement_speed"), elem)
+            # if self.start_damage == None:
+            #     self.start_damage = self.instance(elem["type"], "-", elem)
                 
                 
     def get_weight(self):
@@ -207,12 +209,14 @@ class TooltipHeavy:
         return response["key"]
 
     
-    def instance(self, class_type, element_key, elem):
+    def instance(self, class_type, element_key, block):
         try:
             if class_type == "numeric":
-                return ElementNumeric(elem, element_key)
+                return ElementNumeric(block, element_key)
             elif class_type == "key-value":
-                return ElementKeyValue(elem, element_key)
+                return ElementKeyValue(block, element_key)
+            # elif class_type == "damage":
+            #     print("that's it")
         except:
             pass
         
@@ -237,6 +241,11 @@ class TooltipHeavy:
         self.draw_time = None
         self.aiming_time = None
         self.movement_speed = None
+        
+        # self.start_damage = None
+        # self.damage_decrease_start = None
+        # self.end_damage = None
+        # self.damage_decrease_end = None
         
         self.block = block
         self.parse()

@@ -140,6 +140,71 @@ class HeavyAggregate:
     def get_ammo_type(self):
         return self.blocks.get_ammo_type()
     
+    def get_damage(self):
+        return self.blocks.get_damage()
+    
+    def get_clip_size(self):
+        return self.blocks.get_clip_size()
+    
+    def get_max_distance(self):
+        return self.blocks.get_max_distance()
+        
+    def get_rate_of_fire(self):
+        return self.blocks.get_rate_of_fire()
+    
+    def get_reload_time(self):
+        return self.blocks.get_reload_time()
+    
+    def get_tactical_reload_time(self):
+        return self.blocks.get_tactical_reload_time()
+    
+    def get_reload_modifier(self):
+        return self.blocks.get_reload_modifier()
+    
+    def get_spread(self):
+        return self.blocks.get_spread()
+    
+    def get_hip_fire_spread(self):
+        return self.blocks.get_hip_fire_spread()
+    
+    def get_horizontal_recoil(self):
+        return self.blocks.get_horizontal_recoil()
+    
+    def get_vertical_recoil(self):
+        return self.blocks.get_vertical_recoil()
+    
+    def get_draw_time(self):
+        return self.blocks.get_draw_time()
+    
+    def get_aiming_time(self):
+        return self.blocks.get_aiming_time()
+    
+    def get_movement_speed(self):
+        return self.blocks.get_movement_speed()
+    
+    
+class MachineGunAggregate:
+    def __init__(self, infoblocks):
+        self.blocks = infoblocks
+        
+    def get_weight(self):
+        return self.blocks.get_weight()
+    
+    def get_durability(self):
+        return self.blocks.get_durability()
+    
+    def get_max_durability(self):
+        return self.blocks.get_max_durability()
+    
+    def get_movement_speed(self):
+        return self.blocks.get_movement_speed()
+    
+    def get_damage(self):
+        return self.blocks.get_damage()
+    
+    def get_ammo_type(self):
+        return self.blocks.get_ammo_type()
+    
     def get_clip_size(self):
         return self.blocks.get_clip_size()
     
