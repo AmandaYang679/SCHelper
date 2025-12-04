@@ -30,7 +30,7 @@ DJANGO_APPS = [
 # Список сторонних приложений
 THIRD_PARTY_APPS = [
     "rest_framework",
-    # 'corsheaders',
+    'corsheaders',
     "rest_framework_simplejwt",
 ]
 
@@ -176,11 +176,10 @@ REST_FRAMEWORK = {
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    CORS_ALLOWED_ORIGINS = [  # Разрешенные источники
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
+    CORS_ALLOWED_ORIGINS = [
+        "http://127.0.0.1:4321/",   # порт Astro
+        "http://localhost:4321/",
     ]
-
 
 # Настройки безопасности
 SECURE_BROWSER_XSS_FILTER = True  # Защита от XSS-атак
