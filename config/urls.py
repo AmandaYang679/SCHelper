@@ -24,9 +24,10 @@ base_dir = "api/v1/"
 
 urlpatterns = [
     path(base_dir + "admin/", admin.site.urls),
-    path(base_dir + "api/v1/auth/exbo/", views.ExboAuthView.as_view(), name='exbo-auth'),
-    path(base_dir + "api/token/", TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path(base_dir + "api/token/refresh/", TokenRefreshView.as_view(), name='token_refresh'),
+    path(base_dir + "auth/exbo/", views.ExboAuthView.as_view(), name='exbo-auth'),
+    path(base_dir + "auth/exbo/callback/", views.ExboCallbackView.as_view()),
+    path(base_dir + "token/", TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path(base_dir + "token/refresh/", TokenRefreshView.as_view(), name='token_refresh'),
     path(base_dir + "token/verify/", TokenVerifyView.as_view(), name='token_verify'),
     path(base_dir + "tierlist/", include("apps.tierlist.urls")),
 ]
