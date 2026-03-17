@@ -187,6 +187,11 @@ SECURE_BROWSER_XSS_FILTER = True  # Защита от XSS-атак
 SECURE_CONTENT_TYPE_NOSNIFF = True  # Запрет MIME-типов
 X_FRAME_OPTIONS = "DENY"  # Защита от кликджекинга
 
+# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# SCRF_COOKIE_SECURE = True
+
 
 # Настройки логирования
 LOGGING = {
