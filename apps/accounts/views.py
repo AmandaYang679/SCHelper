@@ -1,7 +1,10 @@
+from django.shortcuts import redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from decouple import config as config_env
 from .services.exbo_client import ExboClientAPI
+from .models import EXBOUser
+from .serializers import EXBOUserSerializer
 
 
 class ExboAuthView(APIView):
@@ -14,7 +17,25 @@ class ExboCallbackView(APIView):
     def get(self, request):
         code = request.GET.get("code")
         client = ExboClientAPI()
-        return client.call_back(code)
+        return client.call_back(request, code)
+        
+
+class GetAllUsers(APIView):
+    def get(self, request):
+        users = EXBOUser.objects.all()
+        serializer = EXBOUserSerializer(users, many=True)
+        return Response({"users": serializer.data})
+    
+
+class UserProfile(APIView):
+    def get(self, request):
+        user_id = request.session.get("exbo_user_id")
+        if user_id:
+            user = EXBOUser.objects.get(user_id=user_id)
+            serializer = EXBOUserSerializer(user, many=False)
+            return Response(serializer.data)
+        else:
+            return redirect("exbo-auth")
         
         
 # class StalcraftAPI(APIView):
