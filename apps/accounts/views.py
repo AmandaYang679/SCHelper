@@ -12,7 +12,7 @@ regions = ["ru", "eu", "sea", "nea"]
 class ExboAuthView(APIView):
     def get(self, request):
         client = ExboClientAPI()
-        return client.authorize()
+        return client.authorize(request)
     
 
 class ExboCallbackView(APIView):

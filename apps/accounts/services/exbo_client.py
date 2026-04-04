@@ -16,8 +16,9 @@ CLIENT_SECRET = config_env('CLIENT_SECRET')
 
 
 class ExboClientAPI():
-    def authorize(self):
+    def authorize(self, request):
         state = str(uuid.uuid4())
+        request.session["state"] = state
 
         params = {
             "client_id": CLIENT_ID,
@@ -32,6 +33,16 @@ class ExboClientAPI():
     
 
     def call_back(self, request, code):
+        state = request.GET.get("state")
+        session_state = request.session.get("state")
+        
+        if session_state != state:
+            return Response(
+                {"error": "Invalid OAuth state"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        request.session.pop("oauth_state", None)
+        
         params={
                 "client_id": CLIENT_ID,
                 "client_secret": CLIENT_SECRET,
