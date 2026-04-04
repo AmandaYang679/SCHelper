@@ -7,6 +7,8 @@ from .models import EXBOUser
 from .serializers import EXBOUserSerializer
 
 
+regions = ["ru", "eu", "sea", "nea"]
+
 class ExboAuthView(APIView):
     def get(self, request):
         client = ExboClientAPI()
@@ -18,6 +20,16 @@ class ExboCallbackView(APIView):
         code = request.GET.get("code")
         client = ExboClientAPI()
         return client.call_back(request, code)
+    
+
+class ExboRefreshAccessToken(APIView):
+    def get(self, request):
+        client = ExboClientAPI()
+        user_id = request.session.get("user_id")
+        if not user_id:
+            return redirect("exbo_auth")
+        user = EXBOUser.objects.get(user_id = request.session.get("user_id"))
+        return client.refresh_access_token(request, user)
         
 
 class GetAllUsers(APIView):
@@ -27,88 +39,31 @@ class GetAllUsers(APIView):
         return Response({"users": serializer.data})
     
 
-class UserProfile(APIView):
+class CharacterProfile(APIView):
     def get(self, request):
-        user_id = request.session.get("exbo_user_id")
-        if user_id:
-            user = EXBOUser.objects.get(user_id=user_id)
-            serializer = EXBOUserSerializer(user, many=False)
-            return Response(serializer.data)
-        else:
-            return redirect("exbo-auth")
+        client = ExboClientAPI()
+        for region in regions:
+            response = client.get_characters_by_region(request, region)
+            if type(response) == list:
+                if len(response) > 1:
+                    profile = []
+                    for character in range(len(response)):
+                        profile.append(client.get_character_profile(request, region, response[character]["information"]["name"]))
+                    return Response(profile)
+                else:
+                    profile = client.get_character_profile(request, region, response[0]["information"]["name"])
+                    return Response(profile)
+            elif type(response) == dict:
+                return Response((response["title"], response["status"]))
         
-        
-# class StalcraftAPI(APIView):
     
-#     ROUTS = {
-#         "characters": "characters",
-#         "auth": "auth",
-#         "authorize": "authorize",
-#         "get_token": "get_token",
-#         "refresh_access_token": "refresh_access_token",
-#         "user_info": "user_info",
-#     }
-    
-    
-#     def _get_url(self, param, flag=True):
-#         if flag == True:
-#             url = self.BASE_URL + param
-#         else:
-#             url = self.DEMO_BASE_URL + param
-#         return url
-    
-    
-#     def _get_url_param(self, uri):
-#         if uri == self.ROUTS["characters"]:
-#             return "/RU/characters"
-#         elif uri == self.ROUTS["authorize"]:
-#             return "/oauth/authorize"
-#         elif uri == self.ROUTS["get_token"]:
-#             return "/oauth/token"
-#         elif uri == self.ROUTS["user_info"]:
-#             return "/oauth/user"
-    
-    
-#     def exbo_user_authorization(self):
-#         params = {
-#             "client_id": self.CLIENT_ID,
-#             "redirect_uri": self.REDIRECTED_URI,
-#             "scope": "",
-#             "response_type": "code",
-#             "state": uuid.uuid4()
-#         }
-#         url = self.BASE_URL + self._get_url_param(self.ROUTS["authorize"])
-#         return requests.get(url, params=params)
-    
-    
-#     def get_token_from_code(self, code):
-#         params = {
-#         "client_id": self.CLIENT_ID,
-#         "client_secret": self.CLIENT_SECRET,
-#         "code": code,
-#         "grant_type": "authorization_code",
-#         "redirect_uri": self.REDIRECTED_URI
-#         }
-#         return requests.get(reverse(self._get_url(self._get_url_param(self.ROUTS["get_token"]), True), query=params))
-    
-    
-#     def refreshing_user_access_token(self, user_refresh_token):
-#         params = {
-#         "client_id": self.CLIENT_ID,
-#         "client_secret": self.CLIENT_SECRET,
-#         "grant_type": "refresh_token",
-#         "refresh_token": user_refresh_token,
-#         "scope": ""
-#         }
-#         return requests.post(reverse(self._get_url(self._get_url_param(self.ROUTS["get_token"]), True), query=params))
-
-    
-#     def requesting_user_info(self, user_access_token):
-#         headers = {"Authorization": f"Bearer {user_access_token}"}
-#         return requests.get(reverse(self._get_url(self._get_url_param(self.ROUTS["user_info"]), True), headers=headers))
-    
-    
-    # def get_characters(self): # demo api
-    #     headers = {"Authorization": f"Bearer {self.DEMO_USER_TOKEN}"}
-    #     response = requests.get(self._get_url(self._get_url_param(self.ROUTS["characters"]), False), headers=headers)
-    #     return response
+class GetPlayerCharacters(APIView):
+    def get(self, request):
+        client = ExboClientAPI()
+        for region in regions:
+            response = client.get_characters_by_region(request, region)
+            if type(response) == list:
+                return Response(response)
+            elif type(response) == dict:
+                return Response((response["title"], response["status"]))
+        return Response({"error": "user not found"})

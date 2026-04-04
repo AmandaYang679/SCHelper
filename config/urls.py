@@ -17,18 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from apps.accounts import views
-from rest_framework_simplejwt.views import TokenVerifyView, TokenObtainPairView, TokenRefreshView
 
 
 base_dir = "api/v1/"
 
 urlpatterns = [
     path(base_dir + "admin/", admin.site.urls),
-    path(base_dir + "auth/exbo/", views.ExboAuthView.as_view(), name='exbo-auth'),
+    path(base_dir + "auth/exbo/", views.ExboAuthView.as_view(), name='exbo_auth'),
     path(base_dir + "auth/exbo/callback/", views.ExboCallbackView.as_view()),
-    path(base_dir + "refresh-token/", views),
+    path(base_dir + "refresh-token/", views.ExboRefreshAccessToken.as_view(), name="refresh_access_token"),
+    path(base_dir + "characters/", views.GetPlayerCharacters.as_view(), name="characters_by_region"),
+    path(base_dir + "profile/", views.CharacterProfile.as_view(), name="profile"),
     path(base_dir + "users/", views.GetAllUsers.as_view(), name="all_users"),
-    path(base_dir + "profile", views.UserProfile.as_view(), name="profile"),
     
-    path(base_dir + "tierlist/", include("apps.tierlist.urls")),
+    # path(base_dir + "tierlist/", include("apps.tierlist.urls")),
 ]
