@@ -1,13 +1,18 @@
 #!/bin/sh
 
-echo "Waiting for postgres..."
+echo "⏳ Waiting for database..."
 
 while ! nc -z postgres 5432; do
-  sleep 1
+  sleep 0.5
 done
 
-echo "PostgreSQL started"
+echo "✅ Database is ready!"
 
-python manage.py migrate
+echo "📦 Applying migrations..."
+python manage.py migrate --noinput
 
-python manage.py runserver 0.0.0.0:8000
+echo "📦 Collecting static..."
+python manage.py collectstatic --noinput
+
+echo "🚀 Starting Gunicorn..."
+gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
