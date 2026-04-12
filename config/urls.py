@@ -28,7 +28,6 @@ urlpatterns = [
     path(base_dir + "refresh-token/", views.ExboRefreshAccessToken.as_view(), name="refresh_access_token"),
     path(base_dir + "characters/", views.GetPlayerCharacters.as_view(), name="characters_by_region"),
     path(base_dir + "profile/", views.CharacterProfile.as_view(), name="profile"),
-    path(base_dir + "users/", views.GetAllUsers.as_view(), name="all_users"),
     
     # path(base_dir + "tierlist/", include("apps.tierlist.urls")),
 ]

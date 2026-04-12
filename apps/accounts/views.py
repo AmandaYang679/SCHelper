@@ -30,13 +30,6 @@ class ExboRefreshAccessToken(APIView):
             return redirect("exbo_auth")
         user = EXBOUser.objects.get(user_id = request.session.get("user_id"))
         return client.refresh_access_token(request, user)
-        
-
-class GetAllUsers(APIView):
-    def get(self, request):
-        users = EXBOUser.objects.all()
-        serializer = EXBOUserSerializer(users, many=True)
-        return Response({"users": serializer.data})
 
         
 class CharacterProfile(APIView):
