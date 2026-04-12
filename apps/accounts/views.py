@@ -7,7 +7,7 @@ from .models import EXBOUser
 from .serializers import EXBOUserSerializer
 
 
-regions = ["ru", "eu", "sea", "nea"]
+REGIONS = ["eu", "ru", "sea", "nea"]
 
 class ExboAuthView(APIView):
     def get(self, request):
@@ -37,30 +37,35 @@ class GetAllUsers(APIView):
         users = EXBOUser.objects.all()
         serializer = EXBOUserSerializer(users, many=True)
         return Response({"users": serializer.data})
-    
 
+        
 class CharacterProfile(APIView):
     def get(self, request):
         client = ExboClientAPI()
-        for region in regions:
+        for region in REGIONS:
             response = client.get_characters_by_region(request, region)
-            if type(response) == list:
+            if isinstance(response, list):
+                if len(response) == 0:
+                    continue
                 if len(response) > 1:
                     profile = []
-                    for character in range(len(response)):
-                        profile.append(client.get_character_profile(request, region, response[character]["information"]["name"]))
+                    for index_character in range(len(response)):
+                        profile.append(
+                            client.get_character_profile(request, region, response[index_character]["information"]["name"])
+                        )
                     return Response(profile)
                 else:
                     profile = client.get_character_profile(request, region, response[0]["information"]["name"])
                     return Response(profile)
-            elif type(response) == dict:
-                return Response((response["title"], response["status"]))
+            elif isinstance(response, dict):
+                continue
+        return Response({"error": "character not found"})
         
     
 class GetPlayerCharacters(APIView):
     def get(self, request):
         client = ExboClientAPI()
-        for region in regions:
+        for region in REGIONS:
             response = client.get_characters_by_region(request, region)
             if type(response) == list:
                 return Response(response)
