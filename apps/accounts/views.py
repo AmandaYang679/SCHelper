@@ -8,23 +8,22 @@ from .serializers import EXBOUserSerializer
 
 
 REGIONS = ["eu", "ru", "sea", "nea"]
+client = ExboClientAPI()
+
 
 class ExboAuthView(APIView):
     def get(self, request):
-        client = ExboClientAPI()
         return client.authorize(request)
     
 
 class ExboCallbackView(APIView):
     def get(self, request):
         code = request.GET.get("code")
-        client = ExboClientAPI()
         return client.call_back(request, code)
     
 
 class ExboRefreshAccessToken(APIView):
     def get(self, request):
-        client = ExboClientAPI()
         user_id = request.session.get("user_id")
         if not user_id:
             return redirect("exbo_auth")
@@ -34,7 +33,6 @@ class ExboRefreshAccessToken(APIView):
         
 class CharacterProfile(APIView):
     def get(self, request):
-        client = ExboClientAPI()
         for region in REGIONS:
             response = client.get_characters_by_region(request, region)
             if isinstance(response, list):
@@ -56,8 +54,7 @@ class CharacterProfile(APIView):
         
     
 class GetPlayerCharacters(APIView):
-    def get(self, request):
-        client = ExboClientAPI()
+    def get(self, request):  
         for region in REGIONS:
             response = client.get_characters_by_region(request, region)
             if type(response) == list:
@@ -65,3 +62,12 @@ class GetPlayerCharacters(APIView):
             elif type(response) == dict:
                 return Response((response["title"], response["status"]))
         return Response({"error": "user not found"})
+    
+    
+class GetPlayerEmissionStatus(APIView):
+    def get(self, request):
+        for region in REGIONS:
+            response = client.get_character_emission(request, region)
+            if response:
+                return Response(response)
+            

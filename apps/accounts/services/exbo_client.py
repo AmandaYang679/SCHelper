@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
+
 BASE_URL = config_env('BASE_URL')
 EAPI = config_env('EAPI')
 CLIENT_ID = config_env('CLIENT_ID')
@@ -107,6 +108,12 @@ class ExboClientAPI():
     def get_character_profile(self, request, region, character):
         access_token = self._get_access_token(request)
         response = self._api_client_eapi(request, access_token, f"{region}/character/by-name/{character}/profile")
+        return response
+    
+    
+    def get_character_emission(self, request, region):
+        access_token = self._get_access_token(request)
+        response = self._api_client_eapi(request, access_token, f"{region}/emission")
         return response
     
     
