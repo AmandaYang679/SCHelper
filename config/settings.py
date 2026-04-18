@@ -177,8 +177,8 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
     CORS_ALLOWED_ORIGINS = [
-        "http://127.0.0.1:4321/",   # порт Astro
-        "http://localhost:4321/",
+        "http://127.0.0.1:4321",   # порт Astro
+        "http://localhost:4321",
     ]
 
 # Настройки безопасности
