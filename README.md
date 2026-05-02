@@ -131,7 +131,7 @@ Redirect:
 
 ---
 ### 3. Profile
-#### GET /api/v1/profile/
+#### GET `/api/v1/profile/`
 Возвращает профиль персонажа.
 
 Логика:
@@ -171,7 +171,7 @@ Redirect:
 
 ---
 ### 4.Emission
-#### GET /api/v1/emission/
+#### GET `/api/v1/emission/`
 
 Возвращает информацию о выбросе (emission) для региона.
 
@@ -185,7 +185,7 @@ Redirect:
 
 ---
 ### 5. Friends List
-#### GET /api/v1/friends_list/
+#### GET `/api/v1/friends_list/`
 Возвращает список друзей для всех персонажей пользователя.
 
 **Success (200):**
