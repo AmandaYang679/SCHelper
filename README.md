@@ -41,14 +41,14 @@ API использует OAuth2 авторизацию через EXBO и sessio
 - Данные session:
     - user_id
     - access_token
-- При отсутствии session происходит redirect на /auth/exbo/
+- При отсутствии session происходит redirect на `/auth/exbo/`
 
 --- 
 ## Endpoints
 
 ### 1. EXBO Authorization
 
-#### GET /api/v1/auth/exbo/
+#### GET `/api/v1/auth/exbo/`
 
 Перенаправляет пользователя на OAuth авторизацию EXBO.
 
@@ -57,7 +57,7 @@ API использует OAuth2 авторизацию через EXBO и sessio
 
 ---
 
-#### GET /api/v1/auth/exbo/callback/
+#### GET `/api/v1/auth/exbo/callback/`
 
 Обрабатывает callback от EXBO и создаёт пользователя.
 
