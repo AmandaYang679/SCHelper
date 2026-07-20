@@ -7,7 +7,7 @@ from .models import EXBOUser
 from .serializers import EXBOUserSerializer
 
 
-REGIONS = ["eu", "ru", "sea", "nea"]
+REGIONS = ["ru", "eu", "sea", "nea"]
 client = ExboClientAPI()
 
 
@@ -28,7 +28,8 @@ class ExboRefreshAccessToken(APIView):
         if not user_id:
             return redirect("exbo_auth")
         user = EXBOUser.objects.get(user_id = request.session.get("user_id"))
-        return client.refresh_access_token(request, user)
+        response = client.refresh_access_token(request, user)
+        return Response(response)
 
         
 class CharacterProfile(APIView):
@@ -71,3 +72,14 @@ class GetPlayerEmissionStatus(APIView):
             if response:
                 return Response(response)
             
+            
+class GetFriendList(APIView):
+    def get(self, request):
+        friends = []
+        for region in REGIONS:
+            name = client.get_character_name(request, region)
+            if not name:
+                continue
+            response = client.get_friend_list(request, region, name)
+            friends.append(response)
+        return Response(friends)

@@ -38,6 +38,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "apps.accounts",
     "apps.tierlist",
+    "apps.items_builds",
+    "apps.items_db",
 ]
 
 # Общий список приложений

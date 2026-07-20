@@ -14,6 +14,7 @@ EAPI = config_env('EAPI')
 CLIENT_ID = config_env('CLIENT_ID')
 REDIRECTED_URI = config_env('REDIRECTED_URI')
 CLIENT_SECRET = config_env('CLIENT_SECRET')
+REGIONS = ["eu", "ru", "sea", "nea"]
 
 
 class ExboClientAPI():
@@ -94,7 +95,7 @@ class ExboClientAPI():
         user.save()
         request.session["access_token"] = response["access_token"]
         
-        return Response("token was succesfully updated")
+        return {"response": "token was successfully updated"}
             
         
     def get_characters_by_region(self, request, region):
@@ -116,6 +117,19 @@ class ExboClientAPI():
         response = self._api_client_eapi(request, access_token, f"{region}/emission")
         return response
     
+    
+    def get_friend_list(self, request, region, character):
+        access_token = self._get_access_token(request)
+        response = self._api_client_eapi(request, access_token, f"{region}/friends/{character}")
+        return response
+    
+    
+    def get_character_name(self, request, region):
+        response = self.get_characters_by_region(request, region)
+        if response:
+            name = response[0]["information"]["name"]
+            return name
+            
     
     def _get_access_token(self, request):
         user_id = request.session.get("user_id")
